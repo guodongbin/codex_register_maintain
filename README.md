@@ -1,12 +1,12 @@
-# daily-task（Fork 即用版：Actions 生成 Token + VPS 自动维护）
+# Action-task（Fork 即用版：Actions 生成 Token + VPS 自动维护）
 
 这个仓库包含两条链路：
 
 - **GitHub Actions（产出端）**：定时运行你的 `task_runner.py`，生成 `codex/*.json`，打包后发布到 GitHub Releases（可选 age 加密）。
 - **VPS（维护端，可选）**：用 `vps_token_maintain.sh` 定时拉取 release、校验、解密/解压、落盘、全量 wham/usage 检测、删除 401、Telegram 汇报。
 
-> 只想用 Actions：看「A」。
-> 还想 VPS 自动维护：看「B」。
+> 只想用 Actions：看「README_repo_root.md」。
+> 还想 VPS 自动维护：看「README_vps_token_maintain.md」。
 
 ---
 
@@ -71,6 +71,7 @@ apt-get install -y curl jq unzip coreutils
 # USE_AGE=1 时需要：
 apt-get install -y age
 ```
+**安装age后会得到公钥和私钥，公钥存Action的secret，名字叫`AGE_RECIPIENT`。私钥存VPS本地，路径填入`.env`文件的`AGE_IDENTITY="/etc/age/xxx.key"`。
 
 ### 2) 放置脚本（放哪都能跑）
 
