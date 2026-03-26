@@ -888,6 +888,15 @@ def main() -> None:
     parser.add_argument(
         "--proxy", default=None, help="代理地址，如 http://127.0.0.1:7897"
     )
+    parser.add_argument(
+        "--once", action="store_true", help="只运行一次"
+    )
+    parser.add_argument(
+        "--sleep_min", type=int, default=10, help="注册成功后的最小睡眠时间(秒)"
+    )
+    parser.add_argument(
+        "--sleep_max", type=int, default=30, help="注册成功后的最大睡眠时间(秒)"
+    )
 
     args = parser.parse_args()
 
@@ -934,6 +943,15 @@ def main() -> None:
         except Exception:
             had_failure = True
             logger.exception("main 捕获到未处理异常")
+
+        if args.once:
+            logger.info("检测到 --once 参数，运行结束。")
+            break
+
+        # 如果需要循环，可以在这里添加 sleep 逻辑
+        sleep_time = random.randint(sleep_min, sleep_max)
+        logger.info("等待 {} 秒后进行下一次注册...", sleep_time)
+        time.sleep(sleep_time)
 
 
 
